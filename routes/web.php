@@ -27,21 +27,21 @@ Route::group(['prefix' => 'itemstatus'], function(){
 });
 
 Route::group(['prefix' => 'complianceitem'], function(){
-    Route::get('/','ComplianceItemController@index')->name('itemstatus');
+    Route::get('/','ComplianceItemController@index')->name('complianceitem');
     Route::post('/add','ComplianceItemController@store');
     Route::post('/update','ComplianceItemController@update');
     Route::post('/delete','ComplianceItemController@delete');
 });
 
 Route::group(['prefix' => 'complianceitemgroup'], function(){
-    Route::get('/','ComplianceItemGroupController@index')->name('itemstatus');
+    Route::get('/','ComplianceItemGroupController@index')->name('complianceitemgroup');
     Route::post('/add','ComplianceItemGroupController@store');
     Route::post('/update','ComplianceItemGroupController@update');
     Route::post('/delete','ComplianceItemGroupController@delete');
 });
 
 Route::group(['prefix' => 'compliancepackage'], function(){
-    Route::get('/','CompliancePackageController@index')->name('itemstatus');
+    Route::get('/','CompliancePackageController@index')->name('compliancepackage');
     Route::post('/add','CompliancePackageController@store');
     Route::post('/update','CompliancePackageController@update');
     Route::post('/delete','CompliancePackageController@delete');
