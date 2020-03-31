@@ -14,3 +14,35 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'itemstatus'], function(){
+    Route::get('/','ItemStatusController@index')->name('itemstatus');
+    Route::post('/add','ItemStatusController@store');
+    Route::post('/update','ItemStatusController@update');
+    Route::post('/delete','ItemStatusController@delete');
+});
+
+Route::group(['prefix' => 'complianceitem'], function(){
+    Route::get('/','ComplianceItemController@index')->name('itemstatus');
+    Route::post('/add','ComplianceItemController@store');
+    Route::post('/update','ComplianceItemController@update');
+    Route::post('/delete','ComplianceItemController@delete');
+});
+
+Route::group(['prefix' => 'complianceitemgroup'], function(){
+    Route::get('/','ComplianceItemGroupController@index')->name('itemstatus');
+    Route::post('/add','ComplianceItemGroupController@store');
+    Route::post('/update','ComplianceItemGroupController@update');
+    Route::post('/delete','ComplianceItemGroupController@delete');
+});
+
+Route::group(['prefix' => 'compliancepackage'], function(){
+    Route::get('/','CompliancePackageController@index')->name('itemstatus');
+    Route::post('/add','CompliancePackageController@store');
+    Route::post('/update','CompliancePackageController@update');
+    Route::post('/delete','CompliancePackageController@delete');
+});
