@@ -55,10 +55,11 @@
       <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    @if(Auth::user()->roles==1)
+      <div class="sidebar-heading">
+    
         Admin
       </div>
-
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompliance" aria-expanded="true" aria-controls="collapseCompliance">
@@ -74,7 +75,8 @@
           </div>
         </div>
       </li>
-
+    @endif
+  
       <!-- Heading -->
       <div class="sidebar-heading">
         Interface
@@ -324,12 +326,12 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                <!-- <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"> -->
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <!-- <a class="dropdown-item" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
@@ -340,12 +342,18 @@
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                   Activity Log
-                </a>
+                </a> -->
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a href="{{ route('logout') }}" class="btn btn-default btn-flat"  onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Log out</a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ __('Logout') }}">
+                                        @csrf
+                                    </form>
+                <!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
-                </a>
+                </a> -->
               </div>
             </li>
 
