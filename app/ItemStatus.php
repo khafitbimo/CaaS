@@ -13,4 +13,19 @@ class ItemStatus extends Model
         'status_description',
         'status_disable',
     ];
+
+    public function itemStatusToAccountItem()
+    {
+        return $this->hasMany('App\AccountItem','status_id');
+    }
+
+    public function itemStatusToAccountItemGroup()
+    {
+        return $this->hasMany('App\AccountItemGroup','status_id');
+    }
+
+    public function itemStatusToAccountPackage()
+    {
+        return $this->hasMany('App\AccountPackage','status_id');
+    }
 }

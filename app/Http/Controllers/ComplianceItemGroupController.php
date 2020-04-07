@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 
 use App\ComplianceItemGroup;
+use App\CompliancePackage;
+use DB;
 
 class ComplianceItemGroupController extends Controller
 {
@@ -17,11 +19,30 @@ class ComplianceItemGroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $data_complianceitemgroup = ComplianceItemGroup::where('item_group_disable',0)->get();
-        return view('complianceitemgroup',['data_complianceitemgroup' => $data_complianceitemgroup]);
+        // if (request()->ajax()) {
+        //     if (!empty($request->filter_package)) {
+        //         $data = DB::table('compliance_item_group')
+        //                 ->select('item_group_id','packages_id','item_group_name','item_group_name','item_group_description')
+        //                 ->where('item_group_disable',0)
+        //                 ->where('packages_id',$request->filter_package)
+        //                 ->get();
+
+        //     }else {
+        //         $data = DB::table('compliance_item_group')
+        //                 ->select('item_group_id','packages_id','item_group_name','item_group_name','item_group_description')
+        //                 ->where('item_group_disable',0)
+        //                 ->get();
+        //     }
+        //     return datatables()->of($data)->make(true);
+        // }
+        // //
+        // $data_complianceitemgroup = ComplianceItemGroup::where('item_group_disable',0)->get();
+        // $data_compliancepackage = CompliancePackage::where('packages_disable',0)->get();
+        // return view('complianceitemgroup',['data_complianceitemgroup' => $data_complianceitemgroup,
+        //                                     'data_compliancepackage' => $data_compliancepackage]);
+        return view('complianceitemgroup');
     }
 
     /**
@@ -129,5 +150,11 @@ class ComplianceItemGroupController extends Controller
     {
         $id = $request->item_group_id;
         ComplianceItemGroup::where(['item_group_id'=>$id])->update(['item_group_disable'=>1]);
+    }
+
+    public function getItemGroupByPackageId()
+    {
+        $complianceitemgroup = ComplianceItemGroup::where('item_group_disable',0)->get();
+        return response($complianceitemgroup);
     }
 }

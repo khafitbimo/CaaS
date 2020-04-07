@@ -21,4 +21,9 @@ class ComplianceItem extends Model
     {
         return $this->belongsTo('App\ComplianceItemGroup','item_group_id');   
     }
+
+    public function itemToAccountItem()
+    {
+        return $this->hasMany('App\AccountItem','item_id');
+    }
 }

@@ -19,4 +19,19 @@ class CompliancePackage extends Model
     {
         return $this->hasMany('App\ComplianceItemGroup','packages_id');
     }
+
+    public function packageToAccountItem()
+    {
+        return $this->hasMany('App\AccountItem','packages_id');
+    }
+
+    public function packageToAccountItemGroup()
+    {
+        return $this->hasMany('App\AccountItemGroup','packages_id');
+    }
+
+    public function packageToAccountPackage()
+    {
+        return $this->hasMany('App\AccountPackage','packages_id');
+    }
 }

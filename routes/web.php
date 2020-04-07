@@ -38,6 +38,7 @@ Route::group(['prefix' => 'complianceitemgroup'], function(){
     Route::post('/add','ComplianceItemGroupController@store');
     Route::post('/update','ComplianceItemGroupController@update');
     Route::post('/delete','ComplianceItemGroupController@delete');
+    Route::post('/getitemjson','ComplianceItemGroupController@getItemGroupByPackageId');
 });
 
 Route::group(['prefix' => 'compliancepackage'], function(){
@@ -45,4 +46,33 @@ Route::group(['prefix' => 'compliancepackage'], function(){
     Route::post('/add','CompliancePackageController@store');
     Route::post('/update','CompliancePackageController@update');
     Route::post('/delete','CompliancePackageController@delete');
+});
+
+Route::group(['prefix' => 'account'], function(){
+    Route::get('/','AccountController@index')->name('account');
+    Route::post('/add','AccountController@store');
+    Route::post('/update','AccountController@update');
+    Route::post('/delete','AccountController@delete');
+});
+
+Route::group(['prefix' => 'accountpackage'], function(){
+    Route::get('/','AccountPackageController@index')->name('accountpackage');
+    Route::post('/add','AccountPackageController@store');
+    Route::post('/update','AccountPackageController@update');
+    Route::post('/delete','AccountPackageController@delete');
+    Route::get('/updatestatus/{id}/{statusid}','AccountPackageController@updatestatus');
+});
+
+Route::group(['prefix' => 'accountitemgroup'], function(){
+    Route::get('/','AccountItemGroupController@index')->name('accountitemgroup');
+    Route::post('/add','AccountItemGroupController@store');
+    Route::post('/update','AccountItemGroupController@update');
+    Route::post('/delete','AccountItemGroupController@delete');
+});
+
+Route::group(['prefix' => 'accountitem'], function(){
+    Route::get('/','AccountItemController@index')->name('accountitem');
+    Route::post('/add','AccountItemController@store');
+    Route::post('/update','AccountItemController@update');
+    Route::post('/delete','AccountItemController@delete');
 });

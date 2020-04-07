@@ -25,4 +25,14 @@ class ComplianceItemGroup extends Model
     {
         return $this->belongsTo('App\CompliancePackage','packages_id');   
     }
+
+    public function itemGroupToAccountItem()
+    {
+        return $this->hasMany('App\AccountItem','item_group_id');
+    }
+
+    public function itemGroupToAccountItemGroup()
+    {
+        return $this->hasMany('App\AccountItemGroup','item_group_id');
+    }
 }

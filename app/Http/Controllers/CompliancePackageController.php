@@ -45,7 +45,7 @@ class CompliancePackageController extends Controller
         //
         $validator = Validator::make($request->all(),
                 [
-                    'packages_name' => 'required'
+                    'inputPackageName' => 'required'
                 ]
             );
         if ($validator->fails()){
@@ -55,8 +55,8 @@ class CompliancePackageController extends Controller
             );
         }else{
             $compliancePackage = new CompliancePackage;
-            $compliancePackage->packages_name = $request->input('packages_name');
-            $compliancePackage->packages_description = $request->input('packages_description');
+            $compliancePackage->packages_name = $request->input('inputPackageName');
+            $compliancePackage->packages_description = $request->input('inputPackageDescription');
             $compliancePackage->save();
             
             return array(
@@ -94,13 +94,13 @@ class CompliancePackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
-        $id = $request->packages_id;
+        $id = $request->editPackageId;
         $data_update = array(
-            'packages_name' => $request->packages_name,
-            'packages_description'=>$request->packages_description
+            'packages_name' => $request->editPackageName,
+            'packages_description'=>$request->editPackageDescription
         );
         CompliancePackage::where(['packages_id'=>$id])->update($data_update);
     }
@@ -121,7 +121,7 @@ class CompliancePackageController extends Controller
 
     public function delete(Request $request)
     {
-        $id = $request->packages_id;
-        CompliancePackages::where(['packages_id'=>$id])->update(['packages_disable'=>1]);
+        $id = $request->deletePackageId;
+        CompliancePackage::where(['packages_id'=>$id])->update(['packages_disable'=>1]);
     }
 }
