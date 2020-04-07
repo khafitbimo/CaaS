@@ -38,7 +38,7 @@ Route::group(['prefix' => 'complianceitemgroup'], function(){
     Route::post('/add','ComplianceItemGroupController@store');
     Route::post('/update','ComplianceItemGroupController@update');
     Route::post('/delete','ComplianceItemGroupController@delete');
-    Route::post('/getitemjson','ComplianceItemGroupController@getItemGroupByPackageId');
+    Route::get('/getitemjson/{packages_id}','ComplianceItemGroupController@getItemGroupByPackageId');
 });
 
 Route::group(['prefix' => 'compliancepackage'], function(){

@@ -21,28 +21,10 @@ class ComplianceItemGroupController extends Controller
      */
     public function index(Request $request)
     {
-        // if (request()->ajax()) {
-        //     if (!empty($request->filter_package)) {
-        //         $data = DB::table('compliance_item_group')
-        //                 ->select('item_group_id','packages_id','item_group_name','item_group_name','item_group_description')
-        //                 ->where('item_group_disable',0)
-        //                 ->where('packages_id',$request->filter_package)
-        //                 ->get();
+        
+        $data_compliancepackage = CompliancePackage::where('packages_disable',0)->get();
 
-        //     }else {
-        //         $data = DB::table('compliance_item_group')
-        //                 ->select('item_group_id','packages_id','item_group_name','item_group_name','item_group_description')
-        //                 ->where('item_group_disable',0)
-        //                 ->get();
-        //     }
-        //     return datatables()->of($data)->make(true);
-        // }
-        // //
-        // $data_complianceitemgroup = ComplianceItemGroup::where('item_group_disable',0)->get();
-        // $data_compliancepackage = CompliancePackage::where('packages_disable',0)->get();
-        // return view('complianceitemgroup',['data_complianceitemgroup' => $data_complianceitemgroup,
-        //                                     'data_compliancepackage' => $data_compliancepackage]);
-        return view('complianceitemgroup');
+        return view('complianceitemgroup',['data_compliancepackage' => $data_compliancepackage]);
     }
 
     /**
@@ -66,7 +48,7 @@ class ComplianceItemGroupController extends Controller
         //
         $validator = Validator::make($request->all(),
                 [
-                    'item_group_name' => 'required'
+                    'inputItemGroupName' => 'required'
                 ]
             );
         if ($validator->fails()){
@@ -76,10 +58,10 @@ class ComplianceItemGroupController extends Controller
             );
         }else{
             $complianceItemGroup = new ComplianceItemGroup;
-            $complianceItemGroup->packages_id = $request->input('packages_id');
-            $complianceItemGroup->item_group_name = $request->input('item_group_name');
-            $complianceItemGroup->item_group_description = $request->input('item_group_description');
-            $complianceItemGroup->item_group_implemented = $request->input('item_group_implemented');
+            $complianceItemGroup->packages_id = $request->input('inputPackageId');
+            $complianceItemGroup->item_group_name = $request->input('inputItemGroupName');
+            $complianceItemGroup->item_group_description = $request->input('inputItemGroupDescription');
+            $complianceItemGroup->item_group_implemented = 1;
             $complianceItemGroup->save();
             
             return array(
@@ -117,16 +99,14 @@ class ComplianceItemGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
-        $id = $request->item_group_id;
+        $id = $request->editItemGroupId;
         $data_update = array(
-            'packages_id' => $request->packages_id,
-            'item_group_name'=>$request->item_group_name,
-            'item_group_description'=>$request->item_group_description,
-            'item_group_implemented'=>$request->item_group_implemented
-            
+            'packages_id' => $request->editPackageId,
+            'item_group_name'=>$request->editItemGroupName,
+            'item_group_description'=>$request->editItemGroupDescription,            
 
         );
         ComplianceItemGroup::where(['item_group_id'=>$id])->update($data_update);
@@ -148,13 +128,14 @@ class ComplianceItemGroupController extends Controller
 
     public function delete(Request $request)
     {
-        $id = $request->item_group_id;
+        $id = $request->deleteId;
         ComplianceItemGroup::where(['item_group_id'=>$id])->update(['item_group_disable'=>1]);
     }
 
-    public function getItemGroupByPackageId()
+    public function getItemGroupByPackageId($packages_id)
     {
-        $complianceitemgroup = ComplianceItemGroup::where('item_group_disable',0)->get();
+        $complianceitemgroup = ComplianceItemGroup::where('item_group_disable',0)
+                                                    ->where('packages_id',$packages_id)->get();
         return response($complianceitemgroup);
     }
 }
