@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 
 use App\ComplianceItem;
+use App\ComplianceItemGroup;
+use App\CompliancePackage;
 
 class ComplianceItemController extends Controller
 {
@@ -19,8 +21,10 @@ class ComplianceItemController extends Controller
     public function index()
     {
         //
-        $data_complianceitem = ComplianceItem::where('item_disable',0)->get();
-        return view('complianceitem',['data_complianceitem' => $data_complianceitem]);
+       
+        $data_compliancepackages = CompliancePackage::where('packages_disable',0)->get();
+        
+        return view('complianceitem',['data_compliancepackages' => $data_compliancepackages]);
     }
 
     /**
@@ -44,7 +48,7 @@ class ComplianceItemController extends Controller
         //
         $validator = Validator::make($request->all(),
                 [
-                    'item_name' => 'required'
+                    'inputItemName' => 'required'
                 ]
             );
         if ($validator->fails()){
@@ -54,10 +58,10 @@ class ComplianceItemController extends Controller
             );
         }else{
             $complianceItem = new ComplianceItem;
-            $complianceItem->item_group_id = $request->input('item_group_id');
-            $complianceItem->status_id = $request->input('status_id');
-            $complianceItem->item_name = $request->input('item_name');
-            $complianceItem->item_description = $request->input('item_description');
+            $complianceItem->item_group_id = $request->input('inputItemGroupId');
+            $complianceItem->status_id = $request->input('inputStatusId');
+            $complianceItem->item_name = $request->input('inputItemName');
+            $complianceItem->item_description = $request->input('inputItemDescription');
             $complianceItem->save();
             
             return array(
@@ -98,12 +102,12 @@ class ComplianceItemController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $id = $request->item_id;
+        $id = $request->editItemId;
         $data_update = array(
-            'item_group_id'=>$request->item_group_id,
-            'status_id'=>$request->status_id,
-            'item_name' => $request->item_name,
-            'item_description' => $request->item_description,
+            'item_group_id'=>$request->editItemGroupId,
+            'status_id'=>$request->editStatusId,
+            'item_name' => $request->editItemName,
+            'item_description' => $request->editItemDescription,
         );
         ComplianceItem::where(['item_id'=>$id])->update($data_update);
     }
@@ -124,7 +128,14 @@ class ComplianceItemController extends Controller
 
     public function delete(Request $request)
     {
-        $id = $request->item_id;
+        $id = $request->deleteId;
         ComplianceItem::where(['item_id'=>$id])->update(['item_disable'=>1]);
+    }
+
+    public function getItemGroupByItemGroupId($itemgroup_id)
+    {
+        $complianceitem = ComplianceItem::where('item_disable',0)
+                                        ->where('item_group_id',$itemgroup_id)->get();
+        return response($complianceitem);
     }
 }

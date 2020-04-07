@@ -28,7 +28,7 @@
             <label class="col-md-2">Package</label>
             <select class="form-control col-md-8" id="filter_package" name="filter_package">
             @foreach ($data_compliancepackage as $compliancepackage)
-            <option value="{{$compliancepackage->packages_id}}">{{$compliancepackage->packages_name}}</option>
+                <option value="{{$compliancepackage->packages_id}}">{{$compliancepackage->packages_name}}</option>
             @endforeach
             </select>
             <div class="col-md-2">
@@ -76,8 +76,11 @@
                 <div class="form-group row">
                     <label for="inputPackageName" class="col-sm-2 control-label">Package</label>
                     <div class="col-sm-10">
-                        <input type="hidden" id="inputPackageId" name="inputPackageId"/>
-                        <input name="inputPackageName" type="text" class="form-control" id="inputPackageName" placeholder="Name">
+                        <select class="form-control col-md-8" id="inputPackageId" name="inputPackageId">
+                        @foreach ($data_compliancepackage as $compliancepackage)
+                        <option value="{{$compliancepackage->packages_id}}">{{$compliancepackage->packages_name}}</option>
+                        @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -123,8 +126,11 @@
             <div class="form-group row">
                     <label for="editPackageName" class="col-sm-2 control-label">Package</label>
                     <div class="col-sm-10">
-                        <input type="hidden" id="editPackageId" name="editPackageId"/>
-                        <input name="editPackageName" type="text" class="form-control" id="editPackageName" placeholder="Name">
+                        <select class="form-control col-md-8" id="editPackageId" name="editPackageId">
+                        @foreach ($data_compliancepackage as $compliancepackage)
+                            <option value="{{$compliancepackage->packages_id}}">{{$compliancepackage->packages_name}}</option>
+                        @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -204,7 +210,8 @@ function loadDataTable(package_id) {
             { "data": "item_group_name","name":"item_group_name" },
             { "data": "item_group_description","name":"item_group_description"},
             { render:function (data,type,row) {
-                content = '<input type="hidden" id="item_group_id" name="item_group_id" value="'+row['item_group_id'] +'"/>' 
+                content = '<input type="hidden" id="item_group_id" name="item_group_id" value="'+row['item_group_id'] +'"/>'
+                        + '<input type="hidden" id="packages_id" name="packages_id" value="'+row['packages_id'] +'"/>'  
                         + '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Edit">'
                         + '<button type="button" class="btn btn-info btn-circle btn-edit"><i class="fa fa-list"></i></button></span> '
                         + '<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Delete">'
@@ -218,11 +225,7 @@ function loadDataTable(package_id) {
 function openModalAdd(){
     $('#modal-add').modal('show');
 
-    var itemPackageId = $("#filter_package :selected").val();
-    var itemPackageName = $("#filter_package :selected").text();
-
     $('#inputPackageId').val(itemPackageId);
-    $('#inputPackageName').val(itemPackageName);
 
 }
 
@@ -276,12 +279,11 @@ $(document).ready(function(){
         }).get();
 
         var me = $(this);
-        var itemPackageId = $("#filter_package :selected").val();
+        var itemPackageId = me.parents('tr').find('#packages_id').val();
         var itemPackageName = $("#filter_package :selected").text();
         var item_group_id = me.parents('tr').find('#item_group_id').val();
 
         $('#editPackageId').val(itemPackageId);
-        $('#editPackageName').val(itemPackageName);
         $('#editItemGroupId').val(item_group_id);
         $('#editItemGroupName').val(data[0]);
         $('#editItemGroupDescription').val(data[1]);
