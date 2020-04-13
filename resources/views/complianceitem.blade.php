@@ -66,6 +66,147 @@
     </div>
     </div>
 
+<!-- Modal Add -->
+<div class="modal fade bd-example-modal-lg" id="modal-add" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">New Item</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+           
+        <form class="form-horizontal" id="addForm">
+            {{csrf_field()}}
+            <div class="modal-body">
+            <div class="box-body">
+                <div class="form-group row">
+                    <label for="inputPackageId" class="col-sm-2 control-label">Package</label>
+                    <div class="col-sm-10">
+                        <select class="form-control col-md-8" id="inputPackageId" name="inputPackageId">
+                        @foreach ($data_compliancepackages as $compliancepackage)
+                            <option value="{{$compliancepackage->packages_id}}">{{$compliancepackage->packages_name}}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputItemGroupId" class="col-sm-2 control-label">Item Group</label>
+                    <div class="col-sm-10">
+                        <select class="form-control col-md-8" id="inputItemGroupId" name="inputItemGroupId">
+                        
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputItemName" class="col-sm-2 control-label">Item Name</label>
+                    <div class="col-sm-10">
+                        <input name="inputItemName" type="text" class="form-control" id="inputItemName" placeholder="Item Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputItemDescription" class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <input name="inputItemDescription" type="text" class="form-control" id="inputItemDescription" placeholder="Description">
+                    </div>
+                </div>
+ 
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Add</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade bd-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Edit Item</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+           
+        <form class="form-horizontal" id="editForm">
+            {{csrf_field()}}
+            <div class="modal-body">
+            <div class="box-body">
+                <div class="form-group row">
+                    <label for="editPackageId" class="col-sm-2 control-label">Package</label>
+                    <div class="col-sm-10">
+                        <select class="form-control col-md-8" id="editPackageId" name="editPackageId">
+                        @foreach ($data_compliancepackages as $compliancepackage)
+                            <option value="{{$compliancepackage->packages_id}}">{{$compliancepackage->packages_name}}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="editItemGroupId" class="col-sm-2 control-label">Item Group</label>
+                    <div class="col-sm-10">
+                        <select class="form-control col-md-8" id="editItemGroupId" name="editItemGroupId">
+                        
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="editItemName" class="col-sm-2 control-label">Item Name</label>
+                    <div class="col-sm-10">
+                        <input type="hidden" id="editItemId" name="editItemId"/>
+                        <input name="editItemName" type="text" class="form-control" id="editItemName" placeholder="Item Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="editItemDescription" class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <input name="editItemDescription" type="text" class="form-control" id="editItemDescription" placeholder="Description">
+                    </div>
+                </div>
+ 
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Update</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-delete">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Delete Item</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form class="form-horizontal" id="deleteForm">
+          {{csrf_field()}}
+          <div class="modal-body">
+            <div class="box-body">
+              <input type="hidden" name="deleteId" id="deleteId">
+              <p> Are you sure want to Delete this data ? </p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Delete</button>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+
 @endsection
 @section('js')
 <script>
@@ -102,8 +243,8 @@ function loadDataTable(item_group_id) {
     })
 }
 
-function loadSelectItemGroup(packages_id){
-    var div = $('#filter_itemgroup')
+function loadSelectItemGroup(packages_id,div,callback){
+    var div = $(div)
     var op = "";
     $.ajax({
         url: "complianceitemgroup/getitemjson/"+ packages_id,
@@ -117,26 +258,144 @@ function loadSelectItemGroup(packages_id){
             }
             div.html("");
             div.append(op);
+
+            callback();
         }
     })
+};
+
+function openModalAdd() {
+    $('#modal-add').modal('show');
+
+    var packages_id = $("select[name='inputPackageId'] option:selected").val(); 
+    loadSelectItemGroup(packages_id,'#inputItemGroupId',function() {});
 }
 
 $(document).ready(function() {
     var packages_id = $("#filter_package :selected").val();
 
-    loadSelectItemGroup(packages_id);
+    loadSelectItemGroup(packages_id,'#filter_itemgroup',function() {});
 
     var item_group_id = $("select[name='filter_itemgroup'] option:selected").val(); 
+    
     loadDataTable(item_group_id);
 
 
     $('#filter_package').on('change',function() {
-        loadSelectItemGroup(this.value);
+        loadSelectItemGroup(this.value,'#filter_itemgroup',function() {});
+    })
+
+    $('#inputPackageId').on('change',function() {
+        loadSelectItemGroup(this.value,'#inputItemGroupId',function() {});
     })
 
     $('#btnfilter').on('click',function () {
         var item_group_id = $("select[name='filter_itemgroup'] option:selected").val(); 
         loadDataTable(item_group_id);
+    });
+
+    $('.modal').on('hidden.bs.modal',function(e){
+        $(this).find('form')[0].reset();
+    });
+
+    $('#addForm').on('submit',function(e) {
+        e.preventDefault();
+        $.ajax({
+            type:"POST",
+            url:"/complianceitem/add",
+            data:$('#addForm').serialize(),
+            success:function(response) {
+                if (response.fail) {
+                    console.log(response.errors);
+                    $.each(response.errors, function( key, value ) {
+                        $( "[name*='"+key+"']" ).parents('.col-sm-10').append('<span class="text-red">'+value+'</span>');
+                    })
+                }else {
+                    console.log(response)
+                    $('#modal-add').modal('hide')
+                    alert('Data Saved');
+                    location.reload();
+                }
+            },
+            error: function(error){
+                console.log(error)
+                alert("Data Not Saved");
+            }
+        })
+    });
+
+    $('#item_table').on('click','.btn-edit',function() {
+        
+        var package_id = $('#filter_package').val(); 
+        $('#editPackageId').val(package_id);
+
+        $tr = $(this).closest('tr');
+        var data = $tr.children("td").map(function(){
+            return $(this).text();
+        }).get();
+
+        loadSelectItemGroup(package_id,'#editItemGroupId',function() {
+           
+            var item_id = $('#item_id').val(); 
+            var item_group_id = $('#item_group_id').val();  
+                       
+            $('#editItemGroupId').val(item_group_id);
+            $('#editItemId').val(item_id);
+            $('#editItemName').val(data[0]);
+            $('#editItemDescription').val(data[1]);
+
+            $('#modal-edit').modal('show');
+        });
+    });
+
+    $('#editForm').on('submit',function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/complianceitem/update",
+            data: $('#editForm').serialize(),
+            success: function(response){
+                console.log(response)
+                $('#modal-edit').modal('hide')
+                alert("Data Updated");
+                location.reload();
+            },
+            error: function(error){
+                console.log(error)
+                alert("Data Not Saved");
+            }
+
+        });
+    });
+
+    $('#item_table').on('click','.btn-delete',function() {
+        $('#modal-delete').modal('show');
+
+        var me = $(this);
+        var item_id = me.parents('tr').find('#item_id').val();
+
+        $('#deleteId').val(item_id);
+    });
+
+    $('#deleteForm').on('submit',function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: "/complianceitem/delete",
+            data: $('#deleteForm').serialize(),
+            success: function(response){
+                console.log(response)
+                $('#modal-delete').modal('hide')
+                alert("Data Deleted");
+                location.reload();
+            },
+            error: function(error){
+                console.log(error)
+                alert("Data Not Deleted");
+            }
+
+        });
     });
 })
 

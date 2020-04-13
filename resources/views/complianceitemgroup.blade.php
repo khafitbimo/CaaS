@@ -6,8 +6,8 @@
 <h1 class="h3 mb-2 text-gray-800">Item Groups</h1>
     <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p> -->
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
     <div class="card-header py-3">
         <div class="row">
             <div class="col-md-6">
@@ -36,26 +36,26 @@
             </div>
         </div>
         <div class="table-responsive">
-        <table class="table table-bordered" id="itemgroup_table" name="itemgroup_table" width="100%s" cellspacing="0">
-            <thead>
-            <tr>
-                <th>Group Name</th>
-                <th>Description</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tfoot>
-            <tr>
-                <th>Group Name</th>
-                <th>Description</th>
-                <th>Action</th>
-            </tr>
-            </tfoot>
-            
-        </table>
+            <table class="table table-bordered" id="itemgroup_table" name="itemgroup_table" width="100%s" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Group Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Group Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+                </tfoot>
+                
+            </table>
         </div>
     </div>
-    </div>
+</div>
 
 
 <!-- Modal Add -->
@@ -225,7 +225,7 @@ function loadDataTable(package_id) {
 function openModalAdd(){
     $('#modal-add').modal('show');
 
-    $('#inputPackageId').val(itemPackageId);
+    // $('#inputPackageId').val(itemPackageId);
 
 }
 

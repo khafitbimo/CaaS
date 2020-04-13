@@ -124,4 +124,10 @@ class CompliancePackageController extends Controller
         $id = $request->deletePackageId;
         CompliancePackage::where(['packages_id'=>$id])->update(['packages_disable'=>1]);
     }
+
+    public function getPackageJson()
+    {
+        $data_compliancepackage= CompliancePackage::where('packages_disable',0)->get();
+        return response($data_compliancepackage);
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 
 use App\Account;
+use App\AccountPackage;
 
 class AccountController extends Controller
 {
@@ -22,7 +23,11 @@ class AccountController extends Controller
         //
 
         $data_account = Account::first();
-        return view('account',['data_account' => $data_account]);
+        $account_id = $data_account->account_id;
+        $data_account_package = AccountPackage::where('account_id',$account_id)
+                                                ->where('isdisable',0)->get();
+
+        return view('account',['data_account' => $data_account,'data_account_package' => $data_account_package]);
     }
 
     /**

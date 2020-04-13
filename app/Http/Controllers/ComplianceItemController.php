@@ -59,7 +59,7 @@ class ComplianceItemController extends Controller
         }else{
             $complianceItem = new ComplianceItem;
             $complianceItem->item_group_id = $request->input('inputItemGroupId');
-            $complianceItem->status_id = $request->input('inputStatusId');
+            $complianceItem->status_id = 1;
             $complianceItem->item_name = $request->input('inputItemName');
             $complianceItem->item_description = $request->input('inputItemDescription');
             $complianceItem->save();
@@ -99,13 +99,12 @@ class ComplianceItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $id = $request->editItemId;
         $data_update = array(
             'item_group_id'=>$request->editItemGroupId,
-            'status_id'=>$request->editStatusId,
             'item_name' => $request->editItemName,
             'item_description' => $request->editItemDescription,
         );

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Account;
+use App\AccountPackage;
+use App\AccountItemGroup;
+use App\ItemStatus;
+use App\AccountItem;
 
 class AccountItemController extends Controller
 {
@@ -14,6 +19,15 @@ class AccountItemController extends Controller
     public function index()
     {
         //
+        $data_account = Account::first();
+        $account_id = $data_account->account_id;
+
+        $data_accountpackage = AccountPackage::where('account_id','=',$account_id)
+                                                ->where('isdisable','=',0)->get();
+        
+        $data_status = ItemStatus::where('status_disable',0)->get();
+
+        return view('accountitem',['data_accountpackage' => $data_accountpackage,'data_status'=>$data_status]);
     }
 
     /**
@@ -66,9 +80,15 @@ class AccountItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $id = $request->editAccountItemId;
+        $data_update = array(
+            'status_id'=>$request->editStatusId,
+            'suggested_approach'=>$request->editItemSuggestedApproach
+        );
+        AccountItem::where(['id'=>$id])->update($data_update);
     }
 
     /**
@@ -80,5 +100,23 @@ class AccountItemController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete(Request $request)
+    {
+        $id = $request->deleteId;
+        AccountItem::where(['id'=>$id])->update(['isdisable'=>1]);
+    }
+
+    public function getItemGroupByItemGroupId($itemgroup_id)
+    {
+        $data_account = Account::first();
+        $account_id = $data_account->account_id;
+
+        $accountitem = AccountItem::with(['accountItemToItem','accountItemToStatus'])
+                                                ->where('account_id','=',$account_id)
+                                                ->where('item_group_id','=',$itemgroup_id)
+                                                ->where('isdisable','=',0)->get();
+        return response($accountitem);
     }
 }

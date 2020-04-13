@@ -47,6 +47,7 @@ Route::group(['prefix' => 'compliancepackage'], function(){
     Route::post('/add','CompliancePackageController@store');
     Route::post('/update','CompliancePackageController@update');
     Route::post('/delete','CompliancePackageController@delete');
+    Route::get('/getJson','CompliancePackageController@getPackageJson');
 });
 
 Route::group(['prefix' => 'account'], function(){
@@ -69,6 +70,7 @@ Route::group(['prefix' => 'accountitemgroup'], function(){
     Route::post('/add','AccountItemGroupController@store');
     Route::post('/update','AccountItemGroupController@update');
     Route::post('/delete','AccountItemGroupController@delete');
+    Route::get('/getitemjson/{packages_id}','AccountItemGroupController@getItemGroupByPackageId');
 });
 
 Route::group(['prefix' => 'accountitem'], function(){
@@ -76,4 +78,5 @@ Route::group(['prefix' => 'accountitem'], function(){
     Route::post('/add','AccountItemController@store');
     Route::post('/update','AccountItemController@update');
     Route::post('/delete','AccountItemController@delete');
+    Route::get('/getitemjson/{item_group_id}','AccountItemController@getItemGroupByItemGroupId');
 });

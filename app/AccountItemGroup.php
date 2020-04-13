@@ -36,4 +36,6 @@ class AccountItemGroup extends Model
     {
         return $this->belongsTo('App\ItemStatus','status_id');   
     }
+
+    
 }
