@@ -88,8 +88,8 @@
       </div>
       
       <!-- Nav Item - Charts -->
-      <li class="nav-item {{Request::routeIs('account')?'active':''}}">
-        <a class="nav-link" href="{{Route('account')}}">
+      <li class="nav-item {{Request::routeIs('profile')?'active':''}}">
+        <a class="nav-link" href="{{Route('profile')}}">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Profile</span></a>
       </li>

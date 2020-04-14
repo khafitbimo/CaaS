@@ -13,14 +13,14 @@
             <div class="col-md-6">
                 <h6 class="m-0 font-weight-bold text-primary">Data Item Groups</h6>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <a href="#" onClick="openModalAdd();" class="btn btn-success btn-icon-split float-right">
                     <span class="icon text-white-50">
                         <i class="fas fa-plus"></i>
                     </span>
                     <span class="text">Add</span>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="card-body">

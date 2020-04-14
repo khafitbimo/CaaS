@@ -148,9 +148,14 @@ class AccountPackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $id = $request->editAccountPackageId;
+        $data_update = array(
+            'status_id'=>$request->editStatusId,
+        );
+        AccountPackage::where(['id'=>$id])->update($data_update);
     }
 
     /**
@@ -178,6 +183,7 @@ class AccountPackageController extends Controller
         );
         AccountPackage::where(['id'=>$id])->update($data_update);
     }
+
 
     
 }

@@ -53,10 +53,13 @@
             </div>
         </div>
         <div class="row">
+        @if(Auth::user()->roles==1)
             <p>
                 <button type="button" class="btn btn-primary" id="btn-edit-account">Edit Account</button>
                 <button type="button" class="btn btn-success" id="btn-add-packages">Add Packages</button>
             </p>
+        @endif
+            
             
         </div>
         <br>
@@ -68,14 +71,20 @@
                     <tr>
                         <th>Packages Name</th>
                         <th>Packages Description</th>
+                        @if(Auth::user()->roles==1)
                         <th>Action</th>
+                        @endif
+                        
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th>Packages Name</th>
                         <th>Packages Description</th>
+                        @if(Auth::user()->roles==1)
                         <th>Action</th>
+                        @endif
+                        
                     </tr>
                     </tfoot>
                     <tbody>
@@ -83,7 +92,8 @@
                         <tr>
                             
                             <td>{{$account_package->accountPackagesToPackages->packages_name}}</td>
-                            <td>{{$account_package->accountPackagesToStatus->status_name}}</td>
+                            <td>{{$account_package->accountPackagesToPackages->packages_description}}</td>
+                            @if(Auth::user()->roles==1)
                             <td>
                                 <input type="hidden" id="account_package_id" name="account_package_id" value="{{$account_package->id}}"/>
                                 <!-- <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Add">
@@ -94,6 +104,8 @@
                                 <button type="button" class="btn btn-danger btn-circle btn-delete"><i class="fas fa-trash"></i></button>
                                 </span>
                             </td>
+                            @endif
+                            
                         </tr>
                     @endforeach
                     </tbody>
