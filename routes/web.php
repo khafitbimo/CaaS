@@ -17,8 +17,15 @@
 
 Auth::routes();
 Route::group(['middleware'=>'auth'],function(){
-    // Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/', 'HomeController@index')->name('index');
+
+    Route::group(['prefix' => 'user'], function(){
+        Route::get('/','UserController@index')->name('users');
+        Route::post('/add','UserController@store');
+        Route::post('/update','UserController@update');
+        Route::post('/delete','UserController@delete');
+    });
 
     Route::group(['prefix' => 'itemstatus'], function(){
         Route::get('/','ItemStatusController@index')->name('itemstatus');
@@ -57,6 +64,7 @@ Route::group(['middleware'=>'auth'],function(){
         Route::post('/add','AccountController@store');
         Route::post('/update','AccountController@update');
         Route::post('/delete','AccountController@delete');
+        Route::get('/{id}','AccountController@getAccountById');
     });
 
     Route::group(['prefix' => 'accountpackage'], function(){

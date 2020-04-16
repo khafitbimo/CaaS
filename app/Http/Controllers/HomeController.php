@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+        
         $data_dashboard = DB::table('vw_report_dashboard')->get();
-        return view('home',['data_dashboard' => $data_dashboard]);
+
+        if (Auth::user()->account_id==0) {
+            return view('home',['data_dashboard' => $data_dashboard,'status' => 'Admin']);
+        }else {
+            $status = Auth::user()->account_id;
+            return view('home',['data_dashboard' => $data_dashboard,'status' => $status]);
+        }
+
+
+        
     }
 }

@@ -76,11 +76,32 @@
         </div>
       </li>
 
-      <li class="nav-item {{Request::routeIs('account')?'active':''}}">
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccount" aria-expanded="true" aria-controls="collapseAccount">
+          <i class="fas fa-fw fa-user"></i>
+          <span>Account</span>
+        </a>
+        <div id="collapseAccount" class="collapse {{ Request::routeIs('account','users') ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Account:</h6>
+            <a class="collapse-item {{Request::routeIs('account')?'active':''}}" href="{{Route('account')}}">Accounts</a>
+            <a class="collapse-item {{Request::routeIs('users')?'active':''}}" href="{{Route('users')}}">User Accounts</a>
+           
+          </div>
+        </div>
+      </li>
+
+      <!-- <li class="nav-item {{Request::routeIs('account')?'active':''}}">
         <a class="nav-link" href="{{Route('account')}}">
           <i class="fas fa-fw fa-user"></i>
           <span>Account</span></a>
       </li>
+
+      <li class="nav-item {{Request::routeIs('users')?'active':''}}">
+        <a class="nav-link" href="{{Route('users')}}">
+          <i class="fas fa-fw fa-user"></i>
+          <span>Users</span></a>
+      </li> -->
     @endif
       <!-- Heading -->
       <div class="sidebar-heading">
@@ -100,7 +121,7 @@
           <i class="fas fa-fw fa-cog"></i>
           <span>Compliance</span>
         </a>
-        <div id="collapseUserCompliance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseUserCompliance" class="collapse {{ Request::routeIs('accountpackage','accountitemgroup','accountitem') ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">User Compliance:</h6>
             <a class="collapse-item {{Request::routeIs('accountpackage')?'active':''}}" href="{{Route('accountpackage')}}">Packages</a>

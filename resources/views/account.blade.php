@@ -3,153 +3,200 @@
 @section('content')
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Account</h1>
+<h1 class="h3 mb-2 text-gray-800">Accounts</h1>
     <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p> -->
 
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Account</h6>
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="m-0 font-weight-bold text-primary">Data Accounts</h6>
+            </div>
+            <div class="col-md-6">
+                <a href="#modal-addpackage" data-target="#modal-add " data-toggle="modal" class="btn btn-success btn-icon-split float-right">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Add</span>
+                </a>
+            </div>
+        </div>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="table-responsive">
-                <table class="table table-bordered"  width="100%" cellspacing="0">
-                    <tbody>
-                    <tr>
-                        <td width="30%">Code</td>
-                        <td width="5%">:</td>
-                        <td width="65%">
-                        <input type="hidden" id="account_id" name="account_id" value="{{$data_account->account_id}}"/>
-                        <strong>{{$data_account->account_code}}</strong></td> 
-                    </tr>
-                    <tr>
-                        <td width="30%">Name</td>
-                        <td width="5%">:</td>
-                        <td width="65%"><strong>{{$data_account->account_name}}</strong></td> 
-                    </tr>
-                    <tr>
-                        <td width="30%">Description</td>
-                        <td width="5%">:</td>
-                        <td width="65%"><strong>{{$data_account->account_description}}</strong></td> 
-                    </tr>
-                    <tr>
-                        <td width="30%">Email</td>
-                        <td width="5%">:</td>
-                        <td width="65%"><strong>{{$data_account->account_email}}</strong></td> 
-                    </tr>
-                    <tr>
-                        <td width="30%">Address</td>
-                        <td width="5%">:</td>
-                        <td width="65%"><strong>{{$data_account->account_address}}</strong></td> 
-                    </tr>
-                    <tr>
-                        <td width="30%">Phone</td>
-                        <td width="5%">:</td>
-                        <td width="65%"><strong>{{$data_account->account_phone}}</strong></td> 
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-        @if(Auth::user()->roles==1)
-            <p>
-                <button type="button" class="btn btn-primary" id="btn-edit-account">Edit Account</button>
-                <button type="button" class="btn btn-success" id="btn-add-packages">Add Packages</button>
-            </p>
-        @endif
-            
-            
-        </div>
-        <br>
-        <div class="row">
-            
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>Packages Name</th>
-                        <th>Packages Description</th>
-                        @if(Auth::user()->roles==1)
-                        <th>Action</th>
-                        @endif
-                        
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th>Packages Name</th>
-                        <th>Packages Description</th>
-                        @if(Auth::user()->roles==1)
-                        <th>Action</th>
-                        @endif
-                        
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    @foreach($data_account_package as $account_package )
-                        <tr>
-                            
-                            <td>{{$account_package->accountPackagesToPackages->packages_name}}</td>
-                            <td>{{$account_package->accountPackagesToPackages->packages_description}}</td>
-                            @if(Auth::user()->roles==1)
-                            <td>
-                                <input type="hidden" id="account_package_id" name="account_package_id" value="{{$account_package->id}}"/>
-                                <!-- <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Add">
-                                <button type="button" class="btn btn-info btn-circle btn-edit"><i class="fa fa-list"></i></button>
-                                </span> -->
+        <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            @foreach($data_account as $account )
+                <tr>
+                    
+                    <td>{{$account->account_code}}</td>
+                    <td>{{$account->account_name}}</td>
+                    <td>{{$account->account_description}}</td>
+                    <td>{{$account->account_address}}</td>
+                    <td>
+                        <input type="hidden" id="account_id" name="account_id" value="{{$account->account_id}}"/>
+                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Edit">
+                        <button type="button" class="btn btn-info btn-circle btn-edit"><i class="fa fa-list"></i></button>
+                        </span>
 
-                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Delete">
-                                <button type="button" class="btn btn-danger btn-circle btn-delete"><i class="fas fa-trash"></i></button>
-                                </span>
-                            </td>
-                            @endif
-                            
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Delete">
+                        <button type="button" class="btn btn-danger btn-circle btn-delete"><i class="fas fa-trash"></i></button>
+                        </span>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
         </div>
     </div>
-</div>
+    </div>
 
-<!-- Modal Add Package -->
-<div class="modal fade bd-example-modal-lg" id="modal-add-package" tabindex="-1" role="dialog">
+<!-- Modal Add -->
+<div class="modal fade bd-example-modal-lg" id="modal-add" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Package</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div class="modal-header">
+            <h5 class="modal-title">New Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+           
+        <form class="form-horizontal" id="addForm">
+            {{csrf_field()}}
             <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="package_table" name="package_table" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Package Name</th>
-                            <th>Package Description</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Package Name</th>
-                            <th>Package Description</th>
-                            <th>Action</th>
-                        </tr>
-                        </tfoot>
-                        
-                    </table>
+                <div class="box-body">
+                    <div class="form-group row">
+                        <label for="inputPackageName" class="col-sm-2 control-label">Code</label>
+                        <div class="col-sm-10">
+                            <input name="inputAccountCode" type="text" class="form-control" id="inputAccountCode" placeholder="Code">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputAccountName" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input name="inputAccountName" type="text" class="form-control" id="inputAccountName" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputAccountDescription" class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <input name="inputAccountDescription" type="text" class="form-control" id="inputAccountDescription" placeholder="Description">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputAccountEmail" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input name="inputAccountEmail" type="email" class="form-control" id="inputAccountEmail" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputAccountPhone" class="col-sm-2 control-label">Phone</label>
+                        <div class="col-sm-10">
+                            <input name="inputAccountPhone" type="text" class="form-control" id="inputAccountPhone" placeholder="Phone">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputAccountAddress" class="col-sm-2 control-label">Address</label>
+                        <div class="col-sm-10">
+                            <textarea rows="4" class="form-control" id="inputAccountAddress" name="inputAccountAddress"></textarea>
+                        </div>
+                    </div>
+    
                 </div>
             </div>
-        
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Add</button>
+            </div>
+        </form>
         </div>
     </div>
 </div>
+
+<!-- Modal Edit -->
+<div class="modal fade bd-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Edit Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+           
+        <form class="form-horizontal" id="editForm">
+            {{csrf_field()}}
+            <div class="modal-body">
+                <div class="box-body">
+                    <div class="form-group row">
+                        <label for="editAccountCode" class="col-sm-2 control-label">Code</label>
+                        <div class="col-sm-10">
+                            <input type="hidden" id="editAccountId" name="editAccountId" />
+                            <input name="editAccountCode" type="text" class="form-control" id="editAccountCode" placeholder="Code">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editAccountName" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input name="editAccountName" type="text" class="form-control" id="editAccountName" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editAccountDescription" class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <input name="editAccountDescription" type="text" class="form-control" id="editAccountDescription" placeholder="Description">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editAccountEmail" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input name="editAccountEmail" type="email" class="form-control" id="editAccountEmail" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editAccountPhone" class="col-sm-2 control-label">Phone</label>
+                        <div class="col-sm-10">
+                            <input name="editAccountPhone" type="text" class="form-control" id="editAccountPhone" placeholder="Phone">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editAccountAddress" class="col-sm-2 control-label">Address</label>
+                        <div class="col-sm-10">
+                            <textarea rows="4" class="form-control" id="editAccountAddress" name="editAccountAddress"></textarea>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success">Update</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modal-delete">
   <div class="modal-dialog">
       <div class="modal-content">
@@ -175,103 +222,111 @@
       </div>
   </div>
 </div>
+
 @endsection
 @section('js')
 <script>
-
-function openModalPackage() {
-    if ($.fn.DataTable.isDataTable('#package_table')) {
-        $('#package_table').DataTable().destroy();
-    }
-
-    $('#package_table').DataTable({
-        ajax: {
-            url: "compliancepackage/getJson",
-            dataSrc:"",
-            dataType: "json",
-            type: "GET",
-            data:{_token: "{{csrf_token()}}"},
-            complete:function(result){
-                // console.log(result);
-            }
-        },
-        columns:[ 
-            { "data": "packages_name","name":"packages_name" },
-            { "data": "packages_description","name":"packages_description"},
-            { render:function (data,type,row) {
-                content = '<input type="hidden" id="packages_id" name="packages_id" value="'+row['packages_id'] +'"/>'
-                        + '<button type="button" class="btn btn-success btn-add-packages-modal">Add</button>';
-                        
-                return content;
-            }}
-        ],
-        initComplete: function(settings,json) {
-            $('#modal-add-package').modal('show');
-        }
-    })
-
-    
-       
-}
-
 $(document).ready(function() {
-    $('#btn-add-packages').on('click',function() {
-        openModalPackage(0);
-    })
-
-    $('#package_table').on('click','.btn-add-packages-modal',function() {
-        var me = $(this);
-        var packages_id = me.parents('tr').find('#packages_id').val();
-        var account_id = $('#account_id').val();
-
-        var formData = new FormData();
-        formData.append('inputAccountId',account_id);
-        formData.append('inputPackageId',packages_id);
-        formData.append('_token', "{{csrf_token()}}");
-        
+    $('#addForm').on('submit',function(e) {
+        e.preventDefault();
 
         $.ajax({
-            url: "accountpackage/add",
-            type: "POST",
-            data:formData,
-            processData: false,
-            contentType: false,
+            type:"POST",
+            url:"/account/add",
+            data:$('#addForm').serialize(),
             success:function(response) {
                 if (response.fail) {
-                    
-                    alert(response.errors);
-                    
+                    console.log(response.errors);
+                    $.each(response.errors, function( key, value ) {
+                        $( "[name*='"+key+"']" ).parents('.col-sm-10').append('<span class="text-red">'+value+'</span>');
+                    })
                 }else {
                     console.log(response)
-                    $('#modal-add-package').modal('hide');
+                    $('#modal-add').modal('hide')
                     alert('Data Saved');
                     location.reload();
                 }
-                
             },
             error: function(error){
                 console.log(error)
                 alert("Data Not Saved");
             }
         })
-        
     });
 
-    $('#dataTable').on('click','.btn-delete',function() {
+    $('.btn-edit').on('click',function(){
+        
+
+        var me = $(this);
+        var account_id = me.parents('tr').find('#account_id').val();
+        
+        
+        $.ajax({
+            type: "GET",
+            url: "/account/"+ account_id,
+            dataType: "json",
+            data: {_token: "{{csrf_token()}}"},
+            success: function(data){
+                console.log(data)
+                $('#editAccountId').val(account_id);
+                $('#editAccountCode').val(data[0].account_code);
+                $('#editAccountName').val(data[0].account_name);
+                $('#editAccountDescription').val(data[0].account_description);
+                $('#editAccountEmail').val(data[0].account_email);
+                $('#editAccountAddress').val(data[0].account_address);
+                $('#editAccountPhone').val(data[0].account_phone);
+
+                $('#modal-edit').modal('show');
+            },
+            error: function(error){
+                console.log(error)
+                
+            }
+
+        });
+
+    });
+
+    $('#editForm').on('submit',function(e){
+        e.preventDefault();
+
+        
+        $.ajax({
+            type: "POST",
+            url: "/account/update",
+            data: $('#editForm').serialize(),
+            success: function(response){
+                console.log(response)
+                $('#modal-edit').modal('hide')
+                alert("Data Updated");
+                location.reload();
+            },
+            error: function(error){
+                console.log(error)
+                alert("Data Not Saved");
+            }
+
+        });
+    });
+
+    $('.btn-delete').on('click',function(){
         $('#modal-delete').modal('show');
 
         var me = $(this);
-        var accountpackage_id = me.parents('tr').find('#account_package_id').val();
+        var account_id = me.parents('tr').find('#account_id').val();
 
-        $('#deleteId').val(accountpackage_id);
+        $('#deleteId').val(account_id);
+
+
     });
+
 
     $('#deleteForm').on('submit',function(e){
         e.preventDefault();
 
         $.ajax({
             type: "POST",
-            url: "/accountpackage/delete",
+            url: "/account/delete",
             data: $('#deleteForm').serialize(),
             success: function(response){
                 console.log(response)
@@ -286,7 +341,11 @@ $(document).ready(function() {
 
         });
     });
+
+    $('.modal').on('hidden.bs.modal',function(e){
+        $(this).find('form')[0].reset();
+    });
+
 })
 </script>
-
 @endsection
